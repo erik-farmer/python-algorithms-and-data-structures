@@ -1,4 +1,10 @@
-"""Components needed for a linked list in Python"""
+"""Components needed for a linked list in Python
+
+   TODOS:
+        Make it so only Node objects can be added to lists
+        Add OrderedList search, remove to account for size
+        Add test file
+"""
 
 
 class UnorderedList(object):
@@ -59,6 +65,23 @@ class UnorderedList(object):
             self.head = current.next
         else:
             previous.next = current.next
+
+
+class OrderedList(UnorderedList):
+    """SubClass of UnorderedList that implements sorting on add"""
+
+    def add(self, new_node):
+        """Adds a new_node to the OrderedList taking the data attribute into
+           account.
+        """
+        previous, current = None, self.head
+        while current is not None and current.data < new_node.data:
+            previous, current = current, current.next
+        if previous is None:
+            self.head = new_node
+        else:
+            previous.next = new_node
+            new_node.next = current
 
 
 class Node(object):
